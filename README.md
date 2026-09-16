@@ -6,10 +6,10 @@ upholsterers, material suppliers) that architects, designers, and small
 product brands can commission or outsource work to.
 
 **Status**: pilot only. Not a finished product, not indexed for search
-engines yet (`noindex` is set on the page), no permanent name or domain -
-temporarily hosted at Sheerd.com while "Archframe" itself stays a working
-name (a few real alternatives - Sourceframe, Trestle - were already ruled
-out on name collisions).
+engines yet (`noindex` is set on the page). Hosted at sheerd.world while
+"Archframe" itself stays a working name and no permanent domain of its
+own has been registered (a few real alternatives - Sourceframe, Trestle -
+were already ruled out on name collisions).
 
 ## What's here
 
@@ -47,3 +47,11 @@ guess based on name order or page position.
 - No permanent name (domain is set - sheerd.world).
 - No Swedish-language variant yet - deferred until a specific pitch to
   a Swedish association (e.g. Interior Cluster) needs it.
+- No per-category pages (e.g. a dedicated metalworkers page), unlike
+  Formground. Those earn their keep there on real SEO surface area
+  (thousands of products across dozens of brands) and genuine browsing
+  need at that catalog size - neither applies yet at 30 entries on a
+  page that's still `noindex`. The existing search/filter box already
+  covers "find me the metalworkers" at this scale. Revisit once the
+  dataset grows past a single source and/or the page comes out of
+  `noindex` to pursue search traffic for real.
