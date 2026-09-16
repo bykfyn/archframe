@@ -36,6 +36,22 @@ from pathlib import Path
 DATA_PATH = Path(__file__).parent.parent / "data" / "production_partners.json"
 OUTPUT_PATH = Path(__file__).parent.parent / "docs" / "index.html"
 
+# Interior Cluster's own area/craft vocabulary is Swedish; the pilot page
+# is in English, so each of the 8 real values seen in the source data is
+# translated for display. Untranslated values (a new category Interior
+# Cluster adds later) fall back to the raw Swedish rather than being
+# dropped, so a source change surfaces as an odd label, not a silent gap.
+AREA_TRANSLATIONS = {
+    "Beslag/komponenter": "Fittings & components",
+    "Glas": "Glass",
+    "Grossist": "Wholesaler",
+    "Metall": "Metal",
+    "Plast Beslag/komponenter": "Plastic fittings & components",
+    "Textil/läder/klädsel": "Textile / leather / upholstery",
+    "Trä (bearbetning)": "Wood (machining)",
+    "Trä (material)": "Wood (material)",
+}
+
 PAGE_CSS = """
   :root {
     --bg: #faf9f7;
@@ -55,9 +71,14 @@ PAGE_CSS = """
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
   main { max-width: 1100px; margin: 0 auto; padding: 56px 20px 60px; }
-  .wordmark { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 28px; }
-  h1 { font-size: 22px; font-weight: 600; margin: 0 0 10px; }
-  .intro { font-size: 14px; color: var(--text-secondary); line-height: 1.6; max-width: 62ch; margin: 0 0 8px; }
+  .header { text-align: center; margin: 0 0 36px; }
+  .wordmark {
+    font-size: 22px; font-weight: 500; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--text-primary); margin: 0;
+  }
+  .wordmark-rule { width: 40px; height: 1px; background: var(--border-strong); margin: 14px auto 0; }
+  h1 { font-size: 22px; font-weight: 600; margin: 14px 0 10px; }
+  .intro { font-size: 14px; color: var(--text-secondary); line-height: 1.6; max-width: 62ch; margin: 0 auto 8px; }
   .pilot-note { font-size: 12px; color: var(--text-muted); margin: 0 0 36px; }
   .grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -92,7 +113,10 @@ PAGE_CSS = """
 
 def card_html(partner):
     name = html.escape(partner["name"])
-    tags = "".join(f'<span class="tag">{html.escape(a)}</span>' for a in partner.get("areas", []))
+    tags = "".join(
+        f'<span class="tag">{html.escape(AREA_TRANSLATIONS.get(a, a))}</span>'
+        for a in partner.get("areas", [])
+    )
     image = (
         f'<img src="{html.escape(partner["image_url"])}" alt="{name}" loading="lazy">'
         if partner.get("image_url")
@@ -129,15 +153,18 @@ def generate():
 </head>
 <body>
 <main>
-  <p class="wordmark">archframe</p>
-  <h1>Production partners</h1>
-  <p class="intro">
-    Real workshops and fabricators — carpenters, metalworkers, upholsterers,
-    material suppliers — for architects and designers commissioning custom
-    work, or brands looking for production capacity. Every card links
-    straight to the workshop's own site.
-  </p>
-  <p class="pilot-note">Early pilot — production partners only, {len(partners)} listed so far.</p>
+  <div class="header">
+    <p class="wordmark">Archframe</p>
+    <div class="wordmark-rule"></div>
+    <h1>Production partners</h1>
+    <p class="intro">
+      Real workshops and fabricators — carpenters, metalworkers, upholsterers,
+      material suppliers — for architects and designers commissioning custom
+      work, or brands looking for production capacity. Every card links
+      straight to the workshop's own site.
+    </p>
+    <p class="pilot-note">Early pilot — production partners only, {len(partners)} listed so far.</p>
+  </div>
   <div class="grid">{cards}
   </div>
   <p class="foot-note">Pilot concept. Not yet a finished product.</p>
