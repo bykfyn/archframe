@@ -111,8 +111,12 @@ def scrape():
             "country": "Sweden",
             "website": website,
             "image_url": image,
-            "source": "Interior Cluster (interiorcluster.se)",
-            "source_category": "Underleverantör",
+            # Associations are lead-generation sources into one shared
+            # company directory, not per-source silos - a company found via
+            # a second association later gets this same id appended, not a
+            # separate record. See data/associations.json for the entity
+            # this id points to (name, description, own website).
+            "associations": ["interior-cluster"],
         })
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)

@@ -7,8 +7,9 @@
     "country": "Sweden",
     "website": "https://www.ackurat.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1444_original_Ackurat_ICS_2_1080x680.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Anderssons Mekaniska",
@@ -18,8 +19,9 @@
     "country": "Sweden",
     "website": "http://www.anderssonsmekaniska.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/5482_large_Anderssonsmekaniksa.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Artex",
@@ -29,8 +31,9 @@
     "country": "Sweden",
     "website": "http://www.artex.se",
     "image_url": "https://d1da7yrcucvk6m.cloudfront.net/sites/1480/media/2986727_medium_Artex.webp",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Bendinggroup",
@@ -41,8 +44,9 @@
     "country": "Sweden",
     "website": "http://www.bendinggroup.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1454_original_BendingGroup1080x680.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "C & D Snickeri",
@@ -52,8 +56,9 @@
     "country": "Sweden",
     "website": "http://www.cdsnickeri.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1616_medium_C_D_Snickeri_1080x680.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "CEOS Fritzoe",
@@ -63,8 +68,9 @@
     "country": "Sweden",
     "website": "http://www.ceos.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1555_medium_CEOS_1080x680.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Carlsson Smide & Järnaffär",
@@ -74,8 +80,9 @@
     "country": "Sweden",
     "website": "http://www.carlssonsmide.com",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1821_medium_CarlssonsSmide.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Decorpanel",
@@ -85,8 +92,9 @@
     "country": "Sweden",
     "website": "http://www.decorpanel.se/",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/5484_large_Decorpanel.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Direktlaminat",
@@ -96,8 +104,9 @@
     "country": "Sweden",
     "website": "https://www.direktlaminat.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1572_medium_direktlaminat.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "EVI Industries Vaggeryd",
@@ -107,8 +116,9 @@
     "country": "Sweden",
     "website": "http://www.eviindustries.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1626_medium_EVI_Bild_hemsida.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Elmo Läder",
@@ -118,8 +128,9 @@
     "country": "Sweden",
     "website": "http://www.elmoleather.com",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/2344_medium_Elmo.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Grimslöv Trä & List",
@@ -129,8 +140,9 @@
     "country": "Sweden",
     "website": "",
     "image_url": null,
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Holm Trävaror",
@@ -140,8 +152,9 @@
     "country": "Sweden",
     "website": "https://www.holmtravaror.se/",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/15078_medium_holmtravarorbild.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Horda Stans",
@@ -151,8 +164,9 @@
     "country": "Sweden",
     "website": "https://www.hordastans.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/5466_medium_Horda-Stans-AB.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "KG List",
@@ -163,8 +177,9 @@
     "country": "Sweden",
     "website": "http://www.kglist.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/5465_medium_kglist-produktgrupp-treskikt_1080x680px.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "KSL Trading",
@@ -174,8 +189,9 @@
     "country": "Sweden",
     "website": "https://www.ksltrading.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/5485_large_kantlister_large.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Ljungsåsa Aktiebolag",
@@ -185,8 +201,9 @@
     "country": "Sweden",
     "website": "http://www.ljungsasa.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1658_medium_ljungsasa.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Ludvig Svensson",
@@ -196,8 +213,9 @@
     "country": "Sweden",
     "website": "https://www.ludvigsvensson.com/sv/interior-textiles/",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/16331_medium_Flatlay_Svensson_V23_2.png",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Magnussons Snickerifabrik",
@@ -207,8 +225,9 @@
     "country": "Sweden",
     "website": "http://www.magnussonssnickeri.se",
     "image_url": null,
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "National",
@@ -218,8 +237,9 @@
     "country": "Sweden",
     "website": "https://www.nationalsweden.se",
     "image_url": "https://d1da7yrcucvk6m.cloudfront.net/sites/1480/media/2984748_medium_National.webp",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Nevotex",
@@ -229,8 +249,9 @@
     "country": "Sweden",
     "website": "https://nevotex.se",
     "image_url": "https://d1da7yrcucvk6m.cloudfront.net/sites/1480/media/3247302_medium_1080x680_Nevotex.webp",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Noas Sweden",
@@ -240,8 +261,9 @@
     "country": "Sweden",
     "website": "http://www.noassweden.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1651_medium_Noa.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "OC Oscarson",
@@ -251,8 +273,9 @@
     "country": "Sweden",
     "website": "https://www.ocoscarson.com",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/2024_medium_OC_Oscarsson2019.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Sibab Interior",
@@ -263,8 +286,9 @@
     "country": "Sweden",
     "website": "https://sibab.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/2202_medium_Sibab.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Stolfabriken i Tibro",
@@ -274,8 +298,9 @@
     "country": "Sweden",
     "website": "http://stolfabriken.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1816_original_Stolfabriken.png",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Svensson & Linnér",
@@ -285,8 +310,9 @@
     "country": "Sweden",
     "website": "http://www.svensson-linner.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/4953_medium_AB_S_L2.png",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Värnamo Sängkläder",
@@ -296,8 +322,9 @@
     "country": "Sweden",
     "website": "https://varnamoofsweden.se",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/15105_large_kudde_med_fa%CC%88rg_1080_680.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "WOG Metall",
@@ -307,8 +334,9 @@
     "country": "Sweden",
     "website": "https://www.wogtra.se/wog-metall/",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1573_medium_Wogmetall.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "WOG Trä",
@@ -318,8 +346,9 @@
     "country": "Sweden",
     "website": "https://www.wogtra.se/wog-tra/",
     "image_url": "https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1574_medium_Wogtra.jpg",
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   },
   {
     "name": "Åberg & Söner",
@@ -329,7 +358,8 @@
     "country": "Sweden",
     "website": "http://www.abergs.nu/formpressning.html",
     "image_url": null,
-    "source": "Interior Cluster (interiorcluster.se)",
-    "source_category": "Underleverantör"
+    "associations": [
+      "interior-cluster"
+    ]
   }
 ]
