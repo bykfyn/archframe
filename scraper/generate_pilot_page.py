@@ -178,16 +178,27 @@ PAGE_CSS = """
   /* An association's real content is its name/description/member count,
      not a photo the way a partner's workshop is - reusing the photo-card
      component here left a large empty "no image" box with nothing to
-     fill it. Same border/radius/background language, different shape. */
+     fill it. Instead of just shrinking the row, the freed space shows a
+     few real member photos - sidesteps the whole "using their logo
+     needs an agreement" question, since these are the same member
+     thumbnails already shown (with rights) elsewhere on the site. */
   .assoc-list { display: flex; flex-direction: column; gap: 12px; }
   .assoc-row {
-    display: block; background: var(--surface-2); border: 0.5px solid var(--border);
+    display: flex; align-items: center; gap: 20px; max-width: 720px;
+    background: var(--surface-2); border: 0.5px solid var(--border);
     border-radius: 12px; padding: 18px 20px; text-decoration: none; color: inherit;
   }
+  .assoc-row-text { flex: 1; min-width: 0; }
   .assoc-row:hover .assoc-name { text-decoration: underline; }
   .assoc-name { font-size: 15px; font-weight: 600; margin: 0 0 6px; color: var(--text-primary); }
-  .assoc-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin: 0 0 8px; max-width: 62ch; }
+  .assoc-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin: 0 0 8px; }
   .assoc-count { font-size: 11px; color: var(--text-muted); margin: 0; }
+  .assoc-thumbs { display: flex; gap: 6px; flex-shrink: 0; }
+  .assoc-thumbs img {
+    width: 56px; height: 56px; border-radius: 8px; object-fit: cover;
+    display: block; background: var(--surface-1);
+  }
+  @media (max-width: 480px) { .assoc-thumbs { display: none; } }
 """
 
 
@@ -361,20 +372,34 @@ def generate_partner_pages(partners, associations_by_id):
         (out_dir / f"{p['slug']}.html").write_text(page)
 
 
-def association_row_html(association, member_count):
+THUMBS_PER_ASSOCIATION_ROW = 4
+
+
+def association_row_html(association, members):
     name = html.escape(association["name"])
+    member_count = len(members)
     meta = f"{member_count} member{'s' if member_count != 1 else ''} listed here"
+    # A fixed small preview, never "all of them" - the row stays exactly
+    # this size whether the association has 5 members or 5,000.
+    thumb_sources = [m["image_url"] for m in members if m.get("image_url")][:THUMBS_PER_ASSOCIATION_ROW]
+    thumbs = "".join(
+        f'<img src="{html.escape(src)}" alt="" loading="lazy">' for src in thumb_sources
+    )
+    thumbs_html = f'<div class="assoc-thumbs">{thumbs}</div>' if thumbs else ""
     return f"""
       <a class="assoc-row" href="associations/{association['slug']}.html">
-        <p class="assoc-name">{name}</p>
-        <p class="assoc-desc">{html.escape(association['description'])}</p>
-        <p class="assoc-count">{meta}</p>
+        <div class="assoc-row-text">
+          <p class="assoc-name">{name}</p>
+          <p class="assoc-desc">{html.escape(association['description'])}</p>
+          <p class="assoc-count">{meta}</p>
+        </div>
+        {thumbs_html}
       </a>"""
 
 
 def generate_associations_index(associations, partners):
     rows = "".join(
-        association_row_html(a, sum(1 for p in partners if a["id"] in p.get("associations", [])))
+        association_row_html(a, [p for p in partners if a["id"] in p.get("associations", [])])
         for a in associations
     )
     body = header_html(

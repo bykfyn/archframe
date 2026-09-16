@@ -102,13 +102,24 @@
   /* An association's real content is its name/description/member count,
      not a photo the way a partner's workshop is - reusing the photo-card
      component here left a large empty "no image" box with nothing to
-     fill it. Same border/radius/background language, different shape. */
+     fill it. Instead of just shrinking the row, the freed space shows a
+     few real member photos - sidesteps the whole "using their logo
+     needs an agreement" question, since these are the same member
+     thumbnails already shown (with rights) elsewhere on the site. */
   .assoc-list { display: flex; flex-direction: column; gap: 12px; }
   .assoc-row {
-    display: block; background: var(--surface-2); border: 0.5px solid var(--border);
+    display: flex; align-items: center; gap: 20px; max-width: 720px;
+    background: var(--surface-2); border: 0.5px solid var(--border);
     border-radius: 12px; padding: 18px 20px; text-decoration: none; color: inherit;
   }
+  .assoc-row-text { flex: 1; min-width: 0; }
   .assoc-row:hover .assoc-name { text-decoration: underline; }
   .assoc-name { font-size: 15px; font-weight: 600; margin: 0 0 6px; color: var(--text-primary); }
-  .assoc-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin: 0 0 8px; max-width: 62ch; }
+  .assoc-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin: 0 0 8px; }
   .assoc-count { font-size: 11px; color: var(--text-muted); margin: 0; }
+  .assoc-thumbs { display: flex; gap: 6px; flex-shrink: 0; }
+  .assoc-thumbs img {
+    width: 56px; height: 56px; border-radius: 8px; object-fit: cover;
+    display: block; background: var(--surface-1);
+  }
+  @media (max-width: 480px) { .assoc-thumbs { display: none; } }
