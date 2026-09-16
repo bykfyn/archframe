@@ -2,13 +2,13 @@
 Archframe pilot page generator.
 
 WHAT THIS DOES:
-  Builds one static, browse-only HTML page (docs/index.html) listing
-  every production partner in data/production_partners.json - a real
-  photo, name, craft/area tags, and a link straight to their own site.
-  No search, no ask-box - at ~30 entries for this pilot, browsing is
-  genuinely enough; building Formground's whole query-translation
-  pipeline for a dataset this size would be solving a problem that
-  doesn't exist yet.
+  Builds one static HTML page (docs/index.html) listing every
+  production partner in data/production_partners.json - a real photo,
+  name, country, craft/area tags, and a link straight to their own
+  site. A plain client-side substring filter (name/area/country, no
+  backend, no query parsing) narrows the grid as you type - no ask-box;
+  building Formground's whole query-translation pipeline for a dataset
+  this size would be solving a problem that doesn't exist yet.
 
 WHY THIS LOOKS LIKE FORMGROUND, BUT ISN'T FORMGROUND'S CODE:
   The card format (image, title, body) deliberately echoes Formground's
@@ -21,9 +21,10 @@ WHY THIS LOOKS LIKE FORMGROUND, BUT ISN'T FORMGROUND'S CODE:
 
 STATUS:
   Pilot only. No name/domain finalized yet (temporarily hosted at
-  Sheerd.com per the ecosystem's own placeholder decision - see
-  project memory). No search. No monetization. Production partners
-  only - not architects.
+  Sheerd.world per the ecosystem's own placeholder decision - see
+  project memory). No monetization. Production partners only - not
+  architects. English-only for now; a Swedish variant is deferred
+  until a specific pitch to a Swedish association needs it.
 
 RUN:
     python3 generate_pilot_page.py
@@ -79,7 +80,19 @@ PAGE_CSS = """
   .wordmark-rule { width: 40px; height: 1px; background: var(--border-strong); margin: 14px auto 0; }
   h1 { font-size: 22px; font-weight: 600; margin: 14px 0 10px; }
   .intro { font-size: 14px; color: var(--text-secondary); line-height: 1.6; max-width: 62ch; margin: 0 auto 8px; }
-  .pilot-note { font-size: 12px; color: var(--text-muted); margin: 0 0 36px; }
+  .pilot-note { font-size: 12px; color: var(--text-muted); margin: 0 0 28px; }
+  .search-wrap { max-width: 420px; margin: 0 auto 36px; }
+  .search-input {
+    width: 100%; font: inherit; font-size: 14px; color: var(--text-primary);
+    background: var(--surface-2); border: 0.5px solid var(--border-strong);
+    border-radius: 999px; padding: 10px 16px; outline: none;
+  }
+  .search-input::placeholder { color: var(--text-muted); }
+  .search-input:focus { border-color: var(--text-accent); }
+  .no-results {
+    text-align: center; font-size: 13px; color: var(--text-muted);
+    padding: 32px 0;
+  }
   .grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
     gap: 16px;
@@ -97,8 +110,9 @@ PAGE_CSS = """
   .card-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .card-image .fallback { font-size: 12px; color: var(--text-muted); }
   .card-body { padding: 12px 14px 14px; }
-  .card-title { font-size: 14px; font-weight: 500; margin: 0 0 6px; color: var(--text-primary); }
+  .card-title { font-size: 14px; font-weight: 500; margin: 0 0 4px; color: var(--text-primary); }
   .card:hover .card-title { text-decoration: underline; }
+  .card-meta { font-size: 11px; color: var(--text-muted); margin: 0 0 8px; }
   .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
   .tag {
     font-size: 10px; color: var(--text-secondary);
@@ -113,26 +127,29 @@ PAGE_CSS = """
 
 def card_html(partner):
     name = html.escape(partner["name"])
-    tags = "".join(
-        f'<span class="tag">{html.escape(AREA_TRANSLATIONS.get(a, a))}</span>'
-        for a in partner.get("areas", [])
-    )
+    country = partner.get("country", "")
+    translated_areas = [AREA_TRANSLATIONS.get(a, a) for a in partner.get("areas", [])]
+    tags = "".join(f'<span class="tag">{html.escape(a)}</span>' for a in translated_areas)
     image = (
         f'<img src="{html.escape(partner["image_url"])}" alt="{name}" loading="lazy">'
         if partner.get("image_url")
         else '<span class="fallback">No photo yet</span>'
     )
     website = partner.get("website")
+    search_text = html.escape(" ".join([partner["name"], country, *translated_areas]).lower())
     tag_open = (
-        f'<a class="card" href="{html.escape(website)}" target="_blank" rel="noopener noreferrer">'
-        if website else '<div class="card no-link">'
+        f'<a class="card" href="{html.escape(website)}" target="_blank" '
+        f'rel="noopener noreferrer" data-search="{search_text}">'
+        if website else f'<div class="card no-link" data-search="{search_text}">'
     )
     tag_close = "</a>" if website else "</div>"
+    country_html = f'<p class="card-meta">{html.escape(country)}</p>' if country else ""
     return f"""
       {tag_open}
         <div class="card-image">{image}</div>
         <div class="card-body">
           <p class="card-title">{name}</p>
+          {country_html}
           <div class="card-tags">{tags}</div>
         </div>
       {tag_close}"""
@@ -164,11 +181,30 @@ def generate():
       straight to the workshop's own site.
     </p>
     <p class="pilot-note">Early pilot — production partners only, {len(partners)} listed so far.</p>
+    <div class="search-wrap">
+      <input type="text" class="search-input" id="search" placeholder="Search by name, craft, or country" autocomplete="off">
+    </div>
   </div>
-  <div class="grid">{cards}
+  <div class="grid" id="grid">{cards}
   </div>
+  <p class="no-results" id="no-results" hidden>No matches. Try a different search.</p>
   <p class="foot-note">Pilot concept. Not yet a finished product.</p>
 </main>
+<script>
+  var input = document.getElementById("search");
+  var cards = Array.prototype.slice.call(document.querySelectorAll("#grid .card"));
+  var noResults = document.getElementById("no-results");
+  input.addEventListener("input", function () {{
+    var query = input.value.trim().toLowerCase();
+    var anyVisible = false;
+    cards.forEach(function (card) {{
+      var match = (card.dataset.search || "").indexOf(query) !== -1;
+      card.style.display = match ? "" : "none";
+      if (match) anyVisible = true;
+    }});
+    noResults.hidden = anyVisible;
+  }});
+</script>
 </body>
 </html>
 """

@@ -103,6 +103,12 @@ def scrape():
         partners.append({
             "name": name,
             "areas": areas,
+            # Not scraped per-member - Interior Cluster's own "About" text
+            # states it is specifically a national Swedish cluster, so this
+            # is a confirmed fact about every member from this source, not
+            # a guess. A future non-Swedish source supplies its own value
+            # instead of this being retrofitted later.
+            "country": "Sweden",
             "website": website,
             "image_url": image,
             "source": "Interior Cluster (interiorcluster.se)",

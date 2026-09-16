@@ -17,9 +17,9 @@ out on name collisions).
   "Underleverantör" (subcontractor) section of Interior Cluster
   (interiorcluster.se), a real Swedish furniture-industry cluster
   organisation, and saves it to `data/production_partners.json`.
-- `scraper/generate_pilot_page.py` - builds `docs/index.html`, a static,
-  browse-only page (no search yet - the list is small enough that
-  browsing is genuinely enough for now).
+- `scraper/generate_pilot_page.py` - builds `docs/index.html`, a static
+  page with a plain client-side substring filter (name/craft/country,
+  no backend, no query parsing).
 - `docs/` - the generated site, served by GitHub Pages.
 
 ## Running it yourself
@@ -41,8 +41,9 @@ guess based on name order or page position.
 
 ## Deliberately not built yet
 
-- No search - the list is small enough that browsing is enough for now.
 - No architects/interior-design category - production partners only,
   to prove the concept on the best-seeded data source first.
 - No monetization.
-- No permanent name or domain.
+- No permanent name (domain is set - sheerd.world).
+- No Swedish-language variant yet - deferred until a specific pitch to
+  a Swedish association (e.g. Interior Cluster) needs it.

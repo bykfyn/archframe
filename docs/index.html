@@ -32,7 +32,19 @@
   .wordmark-rule { width: 40px; height: 1px; background: var(--border-strong); margin: 14px auto 0; }
   h1 { font-size: 22px; font-weight: 600; margin: 14px 0 10px; }
   .intro { font-size: 14px; color: var(--text-secondary); line-height: 1.6; max-width: 62ch; margin: 0 auto 8px; }
-  .pilot-note { font-size: 12px; color: var(--text-muted); margin: 0 0 36px; }
+  .pilot-note { font-size: 12px; color: var(--text-muted); margin: 0 0 28px; }
+  .search-wrap { max-width: 420px; margin: 0 auto 36px; }
+  .search-input {
+    width: 100%; font: inherit; font-size: 14px; color: var(--text-primary);
+    background: var(--surface-2); border: 0.5px solid var(--border-strong);
+    border-radius: 999px; padding: 10px 16px; outline: none;
+  }
+  .search-input::placeholder { color: var(--text-muted); }
+  .search-input:focus { border-color: var(--text-accent); }
+  .no-results {
+    text-align: center; font-size: 13px; color: var(--text-muted);
+    padding: 32px 0;
+  }
   .grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
     gap: 16px;
@@ -50,8 +62,9 @@
   .card-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .card-image .fallback { font-size: 12px; color: var(--text-muted); }
   .card-body { padding: 12px 14px 14px; }
-  .card-title { font-size: 14px; font-weight: 500; margin: 0 0 6px; color: var(--text-primary); }
+  .card-title { font-size: 14px; font-weight: 500; margin: 0 0 4px; color: var(--text-primary); }
   .card:hover .card-title { text-decoration: underline; }
+  .card-meta { font-size: 11px; color: var(--text-muted); margin: 0 0 8px; }
   .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
   .tag {
     font-size: 10px; color: var(--text-secondary);
@@ -76,220 +89,269 @@
       straight to the workshop's own site.
     </p>
     <p class="pilot-note">Early pilot — production partners only, 30 listed so far.</p>
+    <div class="search-wrap">
+      <input type="text" class="search-input" id="search" placeholder="Search by name, craft, or country" autocomplete="off">
+    </div>
   </div>
-  <div class="grid">
-      <a class="card" href="https://www.ackurat.se" target="_blank" rel="noopener noreferrer">
+  <div class="grid" id="grid">
+      <a class="card" href="https://www.ackurat.se" target="_blank" rel="noopener noreferrer" data-search="ackurat industriplast sweden plastic fittings &amp; components">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1444_original_Ackurat_ICS_2_1080x680.jpg" alt="Ackurat Industriplast" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Ackurat Industriplast</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Plastic fittings &amp; components</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.anderssonsmekaniska.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.anderssonsmekaniska.se" target="_blank" rel="noopener noreferrer" data-search="anderssons mekaniska sweden metal">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/5482_large_Anderssonsmekaniksa.jpg" alt="Anderssons Mekaniska" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Anderssons Mekaniska</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Metal</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.artex.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.artex.se" target="_blank" rel="noopener noreferrer" data-search="artex sweden textile / leather / upholstery">
         <div class="card-image"><img src="https://d1da7yrcucvk6m.cloudfront.net/sites/1480/media/2986727_medium_Artex.webp" alt="Artex" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Artex</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Textile / leather / upholstery</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.bendinggroup.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.bendinggroup.se" target="_blank" rel="noopener noreferrer" data-search="bendinggroup sweden wood (machining) metal">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1454_original_BendingGroup1080x680.jpg" alt="Bendinggroup" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Bendinggroup</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (machining)</span><span class="tag">Metal</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.cdsnickeri.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.cdsnickeri.se" target="_blank" rel="noopener noreferrer" data-search="c &amp; d snickeri sweden wood (machining)">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1616_medium_C_D_Snickeri_1080x680.jpg" alt="C &amp; D Snickeri" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">C &amp; D Snickeri</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (machining)</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.ceos.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.ceos.se" target="_blank" rel="noopener noreferrer" data-search="ceos fritzoe sweden wood (material)">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1555_medium_CEOS_1080x680.jpg" alt="CEOS Fritzoe" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">CEOS Fritzoe</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (material)</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.carlssonsmide.com" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.carlssonsmide.com" target="_blank" rel="noopener noreferrer" data-search="carlsson smide &amp; järnaffär sweden metal">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1821_medium_CarlssonsSmide.jpg" alt="Carlsson Smide &amp; Järnaffär" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Carlsson Smide &amp; Järnaffär</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Metal</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.decorpanel.se/" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.decorpanel.se/" target="_blank" rel="noopener noreferrer" data-search="decorpanel sweden wood (machining)">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/5484_large_Decorpanel.jpg" alt="Decorpanel" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Decorpanel</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (machining)</span></div>
         </div>
       </a>
-      <a class="card" href="https://www.direktlaminat.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="https://www.direktlaminat.se" target="_blank" rel="noopener noreferrer" data-search="direktlaminat sweden wood (machining)">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1572_medium_direktlaminat.jpg" alt="Direktlaminat" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Direktlaminat</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (machining)</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.eviindustries.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.eviindustries.se" target="_blank" rel="noopener noreferrer" data-search="evi industries vaggeryd sweden metal">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1626_medium_EVI_Bild_hemsida.jpg" alt="EVI Industries Vaggeryd" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">EVI Industries Vaggeryd</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Metal</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.elmoleather.com" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.elmoleather.com" target="_blank" rel="noopener noreferrer" data-search="elmo läder sweden textile / leather / upholstery">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/2344_medium_Elmo.jpg" alt="Elmo Läder" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Elmo Läder</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Textile / leather / upholstery</span></div>
         </div>
       </a>
-      <div class="card no-link">
+      <div class="card no-link" data-search="grimslöv trä &amp; list sweden wood (machining)">
         <div class="card-image"><span class="fallback">No photo yet</span></div>
         <div class="card-body">
           <p class="card-title">Grimslöv Trä &amp; List</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (machining)</span></div>
         </div>
       </div>
-      <a class="card" href="https://www.holmtravaror.se/" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="https://www.holmtravaror.se/" target="_blank" rel="noopener noreferrer" data-search="holm trävaror sweden wood (material)">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/15078_medium_holmtravarorbild.jpg" alt="Holm Trävaror" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Holm Trävaror</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (material)</span></div>
         </div>
       </a>
-      <a class="card" href="https://www.hordastans.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="https://www.hordastans.se" target="_blank" rel="noopener noreferrer" data-search="horda stans sweden fittings &amp; components">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/5466_medium_Horda-Stans-AB.jpg" alt="Horda Stans" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Horda Stans</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Fittings &amp; components</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.kglist.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.kglist.se" target="_blank" rel="noopener noreferrer" data-search="kg list sweden wood (machining) wood (material)">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/5465_medium_kglist-produktgrupp-treskikt_1080x680px.jpg" alt="KG List" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">KG List</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (machining)</span><span class="tag">Wood (material)</span></div>
         </div>
       </a>
-      <a class="card" href="https://www.ksltrading.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="https://www.ksltrading.se" target="_blank" rel="noopener noreferrer" data-search="ksl trading sweden wholesaler">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/5485_large_kantlister_large.jpg" alt="KSL Trading" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">KSL Trading</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wholesaler</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.ljungsasa.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.ljungsasa.se" target="_blank" rel="noopener noreferrer" data-search="ljungsåsa aktiebolag sweden wood (machining)">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1658_medium_ljungsasa.jpg" alt="Ljungsåsa Aktiebolag" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Ljungsåsa Aktiebolag</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (machining)</span></div>
         </div>
       </a>
-      <a class="card" href="https://www.ludvigsvensson.com/sv/interior-textiles/" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="https://www.ludvigsvensson.com/sv/interior-textiles/" target="_blank" rel="noopener noreferrer" data-search="ludvig svensson sweden textile / leather / upholstery">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/16331_medium_Flatlay_Svensson_V23_2.png" alt="Ludvig Svensson" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Ludvig Svensson</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Textile / leather / upholstery</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.magnussonssnickeri.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.magnussonssnickeri.se" target="_blank" rel="noopener noreferrer" data-search="magnussons snickerifabrik sweden wood (machining)">
         <div class="card-image"><span class="fallback">No photo yet</span></div>
         <div class="card-body">
           <p class="card-title">Magnussons Snickerifabrik</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (machining)</span></div>
         </div>
       </a>
-      <a class="card" href="https://www.nationalsweden.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="https://www.nationalsweden.se" target="_blank" rel="noopener noreferrer" data-search="national sweden textile / leather / upholstery">
         <div class="card-image"><img src="https://d1da7yrcucvk6m.cloudfront.net/sites/1480/media/2984748_medium_National.webp" alt="National" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">National</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Textile / leather / upholstery</span></div>
         </div>
       </a>
-      <a class="card" href="https://nevotex.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="https://nevotex.se" target="_blank" rel="noopener noreferrer" data-search="nevotex sweden textile / leather / upholstery">
         <div class="card-image"><img src="https://d1da7yrcucvk6m.cloudfront.net/sites/1480/media/3247302_medium_1080x680_Nevotex.webp" alt="Nevotex" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Nevotex</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Textile / leather / upholstery</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.noassweden.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.noassweden.se" target="_blank" rel="noopener noreferrer" data-search="noas sweden sweden wood (machining)">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1651_medium_Noa.jpg" alt="Noas Sweden" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Noas Sweden</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (machining)</span></div>
         </div>
       </a>
-      <a class="card" href="https://www.ocoscarson.com" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="https://www.ocoscarson.com" target="_blank" rel="noopener noreferrer" data-search="oc oscarson sweden textile / leather / upholstery">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/2024_medium_OC_Oscarsson2019.jpg" alt="OC Oscarson" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">OC Oscarson</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Textile / leather / upholstery</span></div>
         </div>
       </a>
-      <a class="card" href="https://sibab.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="https://sibab.se" target="_blank" rel="noopener noreferrer" data-search="sibab interior sweden wood (machining) glass">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/2202_medium_Sibab.jpg" alt="Sibab Interior" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Sibab Interior</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (machining)</span><span class="tag">Glass</span></div>
         </div>
       </a>
-      <a class="card" href="http://stolfabriken.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://stolfabriken.se" target="_blank" rel="noopener noreferrer" data-search="stolfabriken i tibro sweden wood (machining)">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1816_original_Stolfabriken.png" alt="Stolfabriken i Tibro" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Stolfabriken i Tibro</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (machining)</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.svensson-linner.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.svensson-linner.se" target="_blank" rel="noopener noreferrer" data-search="svensson &amp; linnér sweden wood (machining)">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/4953_medium_AB_S_L2.png" alt="Svensson &amp; Linnér" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Svensson &amp; Linnér</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (machining)</span></div>
         </div>
       </a>
-      <a class="card" href="https://varnamoofsweden.se" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="https://varnamoofsweden.se" target="_blank" rel="noopener noreferrer" data-search="värnamo sängkläder sweden textile / leather / upholstery">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/15105_large_kudde_med_fa%CC%88rg_1080_680.jpg" alt="Värnamo Sängkläder" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">Värnamo Sängkläder</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Textile / leather / upholstery</span></div>
         </div>
       </a>
-      <a class="card" href="https://www.wogtra.se/wog-metall/" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="https://www.wogtra.se/wog-metall/" target="_blank" rel="noopener noreferrer" data-search="wog metall sweden metal">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1573_medium_Wogmetall.jpg" alt="WOG Metall" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">WOG Metall</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Metal</span></div>
         </div>
       </a>
-      <a class="card" href="https://www.wogtra.se/wog-tra/" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="https://www.wogtra.se/wog-tra/" target="_blank" rel="noopener noreferrer" data-search="wog trä sweden wood (machining)">
         <div class="card-image"><img src="https://dx7phrh2v9esk.cloudfront.net/sites/11/media/1574_medium_Wogtra.jpg" alt="WOG Trä" loading="lazy"></div>
         <div class="card-body">
           <p class="card-title">WOG Trä</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (machining)</span></div>
         </div>
       </a>
-      <a class="card" href="http://www.abergs.nu/formpressning.html" target="_blank" rel="noopener noreferrer">
+      <a class="card" href="http://www.abergs.nu/formpressning.html" target="_blank" rel="noopener noreferrer" data-search="åberg &amp; söner sweden wood (machining)">
         <div class="card-image"><span class="fallback">No photo yet</span></div>
         <div class="card-body">
           <p class="card-title">Åberg &amp; Söner</p>
+          <p class="card-meta">Sweden</p>
           <div class="card-tags"><span class="tag">Wood (machining)</span></div>
         </div>
       </a>
   </div>
+  <p class="no-results" id="no-results" hidden>No matches. Try a different search.</p>
   <p class="foot-note">Pilot concept. Not yet a finished product.</p>
 </main>
+<script>
+  var input = document.getElementById("search");
+  var cards = Array.prototype.slice.call(document.querySelectorAll("#grid .card"));
+  var noResults = document.getElementById("no-results");
+  input.addEventListener("input", function () {
+    var query = input.value.trim().toLowerCase();
+    var anyVisible = false;
+    cards.forEach(function (card) {
+      var match = (card.dataset.search || "").indexOf(query) !== -1;
+      card.style.display = match ? "" : "none";
+      if (match) anyVisible = true;
+    });
+    noResults.hidden = anyVisible;
+  });
+</script>
 </body>
 </html>
