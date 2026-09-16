@@ -35,6 +35,21 @@ WHEN TWO SOURCES DESCRIBE THE SAME COMPANY:
   a real value with another real value, so which source happens to run
   first doesn't quietly change what's shown.
 
+CRAFT RELEVANCE FILTER (2026-09-16):
+  Not every craft an association lists belongs on Archframe - that
+  breadth is Brandvue's job (re-presenting an association's *complete*
+  real membership back to them), not Archframe's (production partners
+  for architects/interior work specifically). Interior Cluster never
+  needed this filter - it's itself a furniture-industry cluster, so
+  every craft tag it uses is already relevant. Skråhantverkarna is a
+  much broader heritage-craft guild (violin-makers, hatmakers,
+  silversmiths, watchmakers sit alongside furniture carpenters and
+  upholsterers) and does need it - see RELEVANT_AREAS_BY_ASSOCIATION
+  below, agreed with the user category-by-category before building.
+  The full, unfiltered 45-member scrape stays intact in
+  data/sources/skrahantverkarna.json for whenever Brandvue is real -
+  this filter only narrows what reaches production_partners.json.
+
 RUN:
     python3 merge_partners.py
 """
@@ -48,6 +63,33 @@ SOURCES_DIR = Path(__file__).parent.parent / "data" / "sources"
 OUTPUT_PATH = Path(__file__).parent.parent / "data" / "production_partners.json"
 
 MERGEABLE_FIELDS = ["city", "country", "website", "image_url", "areas"]
+
+# An association with no entry here is unfiltered - every one of its
+# craft tags is treated as Archframe-relevant (true for Interior
+# Cluster). An association listed here only contributes a partner if at
+# least one of that partner's areas is in the set - everything else from
+# that association is real data, just not Archframe's to show.
+RELEVANT_AREAS_BY_ASSOCIATION = {
+    "skrahantverkarna": {
+        "Bildhuggeri", "Ciselör", "Damastvävare", "Dekorationsmålare",
+        "Finsnickare", "Förgyllare", "Inredningssnickare", "Konservator",
+        "Konstgjutare", "Konstglasmästare", "Konstinramare",
+        "Kopparslagarmästare", "Korgmakare", "Metallkonservator",
+        "Metallkonstnär", "Möbelrenoverare", "Möbelsnickare",
+        "Rottingmöbelfabrikör", "Snickare", "Stenhuggare", "Stenmontör",
+        "Tapetmakare", "Tapetserare",
+    },
+}
+
+
+def is_archframe_relevant(partner):
+    for association_id in partner.get("associations", []):
+        allowlist = RELEVANT_AREAS_BY_ASSOCIATION.get(association_id)
+        if allowlist is None:
+            return True  # this association is unfiltered
+        if allowlist.intersection(partner.get("areas", [])):
+            return True
+    return False
 
 
 def normalize_website(url):
@@ -88,8 +130,12 @@ def merge():
         raise RuntimeError(f"No source files found in {SOURCES_DIR} - run the scrapers first.")
 
     merged = {}
+    filtered_out = 0
     for path in source_files:
         for partner in json.loads(path.read_text()):
+            if not is_archframe_relevant(partner):
+                filtered_out += 1
+                continue
             key = merge_key(partner)
             if key in merged:
                 merge_into(merged[key], partner)
@@ -102,7 +148,8 @@ def merge():
     multi_association = sum(1 for p in partners if len(p["associations"]) > 1)
     print(
         f"Merged {len(source_files)} source file(s) into {len(partners)} unique partners "
-        f"({multi_association} found via more than one association) -> {OUTPUT_PATH}"
+        f"({multi_association} found via more than one association, {filtered_out} "
+        f"excluded as not Archframe-relevant) -> {OUTPUT_PATH}"
     )
 
 

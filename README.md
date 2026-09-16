@@ -30,7 +30,16 @@ were already ruled out on name collisions).
   already caught and had to be fixed for (two genuinely distinct
   sibling companies, "WOG Metall" and "WOG Trä", sharing one parent
   domain via different paths - domain-only matching wrongly merged
-  them into one until the key included the path too).
+  them into one until the key included the path too). Also applies a
+  per-association craft-relevance filter (`RELEVANT_AREAS_BY_ASSOCIATION`)
+  - not every trade an association lists belongs on Archframe (that's
+  Brandvue's job, re-presenting an association's *complete* roster back
+  to them); Skråhantverkarna's 45 members narrow to the 22 whose craft
+  is furniture/interior/building-relevant, while the full scrape stays
+  intact in `data/sources/skrahantverkarna.json` for whenever Brandvue
+  is real. Interior Cluster needs no filter - every craft tag it uses is
+  already furniture-industry-relevant, since Interior Cluster itself is
+  a furniture-industry cluster.
 - `data/associations.json` - the association(s) used as sources, as
   entities in their own right (name, description, own website) - not
   just a text field on each partner. Associations are lead-generation
@@ -58,7 +67,7 @@ cd scraper
 pip install -r requirements.txt
 python3 scrape_interior_cluster.py   # re-scrapes Interior Cluster
 python3 scrape_skrahantverkarna.py   # re-scrapes Skråhantverkarna
-python3 merge_partners.py            # combines both sources, deduplicated
+python3 merge_partners.py            # combines both sources, deduplicated + craft-relevance filtered
 python3 generate_pilot_page.py       # rebuilds the whole docs/ site from that data
 ```
 

@@ -173,6 +173,7 @@ PAGE_CSS = """
   }
   .btn:hover { border-color: var(--text-accent); }
   .section-heading { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin: 0 0 16px; }
+  .filter-note { font-size: 12px; color: var(--text-muted); font-style: italic; margin: -10px 0 24px; }
 
   /* --- associations index: text-forward, not a photo card --- */
   /* An association's real content is its name/description/member count,
@@ -443,6 +444,7 @@ def generate_association_pages(associations, partners):
   <p class="profile-desc">{html.escape(a['description'])}</p>
   <a class="btn" href="{html.escape(a['website'])}" target="_blank" rel="noopener noreferrer">Visit {html.escape(a['name'])} &rarr;</a>
   <p class="section-heading">Associated ({len(members)})</p>
+  {f'<p class="filter-note">{html.escape(a["note"])}</p>' if a.get("note") else ""}
   <div class="grid">{cards}
   </div>"""
         page = page_shell(f"{a['name']} — Archframe", body, depth=1)
