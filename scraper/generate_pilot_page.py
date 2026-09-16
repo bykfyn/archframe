@@ -174,16 +174,20 @@ PAGE_CSS = """
   .btn:hover { border-color: var(--text-accent); }
   .section-heading { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin: 0 0 16px; }
 
-  /* --- associations index --- */
-  .assoc-list { display: flex; flex-direction: column; gap: 16px; }
+  /* --- associations index: text-forward, not a photo card --- */
+  /* An association's real content is its name/description/member count,
+     not a photo the way a partner's workshop is - reusing the photo-card
+     component here left a large empty "no image" box with nothing to
+     fill it. Same border/radius/background language, different shape. */
+  .assoc-list { display: flex; flex-direction: column; gap: 12px; }
   .assoc-row {
     display: block; background: var(--surface-2); border: 0.5px solid var(--border);
-    border-radius: 12px; padding: 20px 22px; text-decoration: none; color: inherit;
+    border-radius: 12px; padding: 18px 20px; text-decoration: none; color: inherit;
   }
   .assoc-row:hover .assoc-name { text-decoration: underline; }
-  .assoc-name { font-size: 16px; font-weight: 600; margin: 0 0 6px; color: var(--text-primary); }
+  .assoc-name { font-size: 15px; font-weight: 600; margin: 0 0 6px; color: var(--text-primary); }
   .assoc-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin: 0 0 8px; max-width: 62ch; }
-  .assoc-count { font-size: 12px; color: var(--text-muted); margin: 0; }
+  .assoc-count { font-size: 11px; color: var(--text-muted); margin: 0; }
 """
 
 
@@ -357,16 +361,22 @@ def generate_partner_pages(partners, associations_by_id):
         (out_dir / f"{p['slug']}.html").write_text(page)
 
 
+def association_row_html(association, member_count):
+    name = html.escape(association["name"])
+    meta = f"{member_count} member{'s' if member_count != 1 else ''} listed here"
+    return f"""
+      <a class="assoc-row" href="associations/{association['slug']}.html">
+        <p class="assoc-name">{name}</p>
+        <p class="assoc-desc">{html.escape(association['description'])}</p>
+        <p class="assoc-count">{meta}</p>
+      </a>"""
+
+
 def generate_associations_index(associations, partners):
-    rows = []
-    for a in associations:
-        member_count = sum(1 for p in partners if a["id"] in p.get("associations", []))
-        rows.append(f"""
-      <a class="assoc-row" href="associations/{a['slug']}.html">
-        <p class="assoc-name">{html.escape(a['name'])}</p>
-        <p class="assoc-desc">{html.escape(a['description'])}</p>
-        <p class="assoc-count">{member_count} member{'s' if member_count != 1 else ''} listed here</p>
-      </a>""")
+    rows = "".join(
+        association_row_html(a, sum(1 for p in partners if a["id"] in p.get("associations", [])))
+        for a in associations
+    )
     body = header_html(
         "", "associations", "Associations",
         "The real trade and craft associations whose public member data seeds this "
@@ -374,7 +384,7 @@ def generate_associations_index(associations, partners):
         "criteria — it re-presents their members with real photos, search, and a "
         "shared profile that can span more than one association.",
     ) + f"""
-  <div class="assoc-list">{''.join(rows)}
+  <div class="assoc-list">{rows}
   </div>
   <p class="foot-note">Pilot concept. Not yet a finished product.</p>"""
     (DOCS_DIR / "associations.html").write_text(page_shell("Associations — Archframe", body))
