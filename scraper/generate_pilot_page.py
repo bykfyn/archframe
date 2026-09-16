@@ -39,10 +39,9 @@ STATUS:
   the ecosystem's own placeholder decision - see project memory). No
   monetization. Production partners only - not architects. English-only
   for now; a Swedish variant is deferred until a specific pitch to a
-  Swedish association needs it. Single source (Interior Cluster) for
-  now, deliberately - the associations/profile-pages architecture is
-  being proven on one clean source before more (messier) sources are
-  merged in.
+  Swedish association needs it. Two sources merged so far (Interior
+  Cluster, Skråhantverkarna) via merge_partners.py - see that file for
+  how cross-source deduplication actually works.
 
 RUN:
     python3 generate_pilot_page.py
@@ -51,6 +50,7 @@ RUN:
 import html
 import json
 import re
+import unicodedata
 from pathlib import Path
 
 DATA_DIR = Path(__file__).parent.parent / "data"
@@ -204,16 +204,18 @@ PAGE_CSS = """
 """
 
 
-# Swedish letters have no ASCII equivalent that a plain regex strip would
-# produce correctly - stripping them outright turns "Elmo Läder" into the
-# unreadable slug "elmo-l-der" instead of "elmo-lader". 8 of 30 real
-# partner names use at least one of these.
-SWEDISH_TRANSLITERATION = str.maketrans("åäöÅÄÖ", "aaoAAO")
-
-
 def slugify(name):
-    slug = name.translate(SWEDISH_TRANSLITERATION).lower().strip()
-    slug = re.sub(r"[^a-z0-9]+", "-", slug)
+    """Accented letters have no ASCII equivalent that a plain regex strip
+    would produce correctly - stripping them outright turns "Elmo Läder"
+    into the unreadable slug "elmo-l-der" instead of "elmo-lader". NFKD
+    decomposition + dropping combining marks handles this generically
+    (å/ä/ö, é, ñ, ü, ...) rather than hand-maintaining a per-language
+    table - a second source (Skråhantverkarna) already needed accents
+    beyond Swedish (Ateljé Ebéniste, Svensson & Linnér) that a
+    Swedish-only table missed."""
+    decomposed = unicodedata.normalize("NFKD", name)
+    stripped = "".join(c for c in decomposed if not unicodedata.combining(c))
+    slug = re.sub(r"[^a-z0-9]+", "-", stripped.lower().strip())
     return slug.strip("-")
 
 
@@ -275,9 +277,18 @@ def header_html(prefix, current, heading, intro=""):
   </div>"""
 
 
+def location_text(partner):
+    """"Stockholm, Sweden" when a source gives city (Skråhantverkarna),
+    just "Sweden" when it only gives country (Interior Cluster) - never
+    guesses a city a source didn't actually provide."""
+    city = partner.get("city") or ""
+    country = partner.get("country") or ""
+    return ", ".join(part for part in [city, country] if part)
+
+
 def partner_card_html(partner, link_prefix=""):
     name = html.escape(partner["name"])
-    country = partner.get("country", "")
+    location = location_text(partner)
     translated_areas = [AREA_TRANSLATIONS.get(a, a) for a in partner.get("areas", [])]
     tags = "".join(f'<span class="tag">{html.escape(a)}</span>' for a in translated_areas)
     image = (
@@ -285,15 +296,16 @@ def partner_card_html(partner, link_prefix=""):
         if partner.get("image_url")
         else '<span class="fallback">No photo yet</span>'
     )
-    search_text = html.escape(" ".join([partner["name"], country, *translated_areas]).lower())
+    search_terms = [partner["name"], location, *translated_areas]
+    search_text = html.escape(" ".join(search_terms).lower())
     href = f'{link_prefix}partners/{partner["slug"]}.html'
-    country_html = f'<p class="card-meta">{html.escape(country)}</p>' if country else ""
+    location_html = f'<p class="card-meta">{html.escape(location)}</p>' if location else ""
     return f"""
       <a class="card" href="{href}" data-search="{search_text}">
         <div class="card-image">{image}</div>
         <div class="card-body">
           <p class="card-title">{name}</p>
-          {country_html}
+          {location_html}
           <div class="card-tags">{tags}</div>
         </div>
       </a>"""
@@ -339,7 +351,7 @@ def generate_partner_pages(partners, associations_by_id):
     out_dir.mkdir(parents=True, exist_ok=True)
     for p in partners:
         name = html.escape(p["name"])
-        country = p.get("country", "")
+        location = location_text(p)
         translated_areas = [AREA_TRANSLATIONS.get(a, a) for a in p.get("areas", [])]
         tags = "".join(f'<span class="tag">{html.escape(a)}</span>' for a in translated_areas)
         image = (
@@ -365,7 +377,7 @@ def generate_partner_pages(partners, associations_by_id):
   <a class="back-link" href="../index.html">&larr; All production partners</a>
   <div class="profile-image">{image}</div>
   <h1 class="profile-title">{name}</h1>
-  <p class="profile-meta">{html.escape(country)}</p>
+  <p class="profile-meta">{html.escape(location)}</p>
   <div class="profile-tags">{tags}</div>
   {member_of_html}
   {website_html}

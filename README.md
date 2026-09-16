@@ -16,7 +16,21 @@ were already ruled out on name collisions).
 - `scraper/scrape_interior_cluster.py` - scrapes the real, public
   "Underleverantör" (subcontractor) section of Interior Cluster
   (interiorcluster.se), a real Swedish furniture-industry cluster
-  organisation, and saves it to `data/production_partners.json`.
+  organisation, and saves it to `data/sources/interior_cluster.json`.
+- `scraper/scrape_skrahantverkarna.py` - scrapes Föreningen
+  Skråhantverkarna's real, complete member listing (45 members, every
+  one with a real photo, most with real city-level address data) to
+  `data/sources/skrahantverkarna.json`.
+- `scraper/merge_partners.py` - combines every `data/sources/*.json`
+  file into the real, final `data/production_partners.json`,
+  deduplicating on normalized website domain+path (falling back to
+  normalized name) so the same real company found via more than one
+  association becomes one entry with multiple associations, not a
+  duplicate. See the module's own docstring for a real case this
+  already caught and had to be fixed for (two genuinely distinct
+  sibling companies, "WOG Metall" and "WOG Trä", sharing one parent
+  domain via different paths - domain-only matching wrongly merged
+  them into one until the key included the path too).
 - `data/associations.json` - the association(s) used as sources, as
   entities in their own right (name, description, own website) - not
   just a text field on each partner. Associations are lead-generation
@@ -42,27 +56,39 @@ were already ruled out on name collisions).
 ```bash
 cd scraper
 pip install -r requirements.txt
-python3 scrape_interior_cluster.py   # re-scrapes the real, live source
+python3 scrape_interior_cluster.py   # re-scrapes Interior Cluster
+python3 scrape_skrahantverkarna.py   # re-scrapes Skråhantverkarna
+python3 merge_partners.py            # combines both sources, deduplicated
 python3 generate_pilot_page.py       # rebuilds the whole docs/ site from that data
 ```
 
-## Why this data source
+## Why these data sources
 
-Checked directly before building anything: `interiorcluster.se/robots.txt`
-is fully open, and each member on their real member page carries genuine
-`data-medlemstyp` (member type) and `data-omrade` (craft/area) attributes
-in the server-rendered HTML - a robust, real signal to filter on, not a
-guess based on name order or page position.
+- **Interior Cluster**: checked directly before building anything -
+  `interiorcluster.se/robots.txt` is fully open, and each member on their
+  real member page carries genuine `data-medlemstyp` (member type) and
+  `data-omrade` (craft/area) attributes in the server-rendered HTML - a
+  robust, real signal to filter on, not a guess based on name order or
+  page position.
+- **Skråhantverkarna**: `skrahantverkarna.se/robots.txt` is fully open
+  (Yoast's default block list, nothing relevant disallowed). Smaller (45
+  members) but the richest per-entry data quality found of any source
+  researched so far - every member has a real photo, and it's the only
+  source found with real city-level address data.
 
 ## Deliberately not built yet
 
-- Only one association source (Interior Cluster) for now, on purpose -
-  the associations/profile-pages architecture above is being proven on
-  one clean source before Hantverkarna Stockholm, Skråhantverkarna,
-  Snickarmästarna, and TMF (all researched, none yet built) get merged
-  into the same shared directory. Merging them will need a real
-  dedup step (normalized website domain as the primary key) once a
-  company can plausibly appear via more than one source.
+- Two association sources merged so far (Interior Cluster,
+  Skråhantverkarna), on purpose one at a time - Hantverkarna Stockholm,
+  Snickarmästarna, and TMF are all researched but not yet built.
+  Hantverkarna Stockholm is next in line (190 members, very clean
+  structure, but zero images and needs real filtering - of ~66 real
+  trades in use, only ~15-20 are Archframe-relevant, the rest is
+  hairdressers/tattoo-artists/etc. breadth from a much broader craft
+  guild). Snickarmästarna needs more defensive parsing than any other
+  source checked (real per-member structure exists but is inconsistently
+  populated). TMF needs its actual query API re-derived from the current
+  JS bundle before its real yield for the Underleverantör tier is known.
 - No "scrape the company's own site" step yet - the realistic version
   of this (once it's built) is pulling each company's Open Graph image
   and meta description, not a full custom per-site scrape, since there's

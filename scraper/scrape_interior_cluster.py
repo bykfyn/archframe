@@ -5,11 +5,14 @@ WHAT THIS DOES:
   Fetches Interior Cluster's real member page and saves every real
   "Underleverantör" (subcontractor/production-partner) entry - name,
   external link, image, and their own real area/craft tag - to
-  data/production_partners.json. This is Archframe's v1 pilot category:
-  production partners only, seeded from one real, well-structured
-  association source - not architects, not Interior Cluster's other
-  member types (Möbelproducent is Formground's territory; Formgivare/
-  Intressent are designers/institutions, not production partners).
+  data/sources/interior_cluster.json (one file per source - see
+  merge_partners.py for how sources get combined into the real, final
+  data/production_partners.json). This is Archframe's v1 pilot
+  category: production partners only, seeded from one real,
+  well-structured association source - not architects, not Interior
+  Cluster's other member types (Möbelproducent is Formground's
+  territory; Formgivare/Intressent are designers/institutions, not
+  production partners).
 
 WHY THIS SOURCE, WHY THIS SELECTOR:
   Checked live (2026-09-15): robots.txt fully open, and - better than
@@ -41,7 +44,7 @@ import requests
 from bs4 import BeautifulSoup
 
 SOURCE_URL = "https://interiorcluster.se/medlemmar"
-OUTPUT_PATH = Path(__file__).parent.parent / "data" / "production_partners.json"
+OUTPUT_PATH = Path(__file__).parent.parent / "data" / "sources" / "interior_cluster.json"
 
 # Case varies in the wild ("underleverantör" confirmed lowercase in the
 # real HTML) - matched case-insensitively rather than assuming Interior
